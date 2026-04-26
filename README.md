@@ -76,6 +76,16 @@ expense_tracker/
 ```
 
 ---
+## 📸 Screenshots
+
+### 🏠 HomePage
+![Dashboard](screenshots/homePage.png)
+
+### 📊 DashBoard
+![Charts](screenshots/dashboard.png)
+
+### 👤 Charts
+![Profile](screenshots/charts.png)
 
 ## ⚙️ Installation & Setup
 
