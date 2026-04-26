@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="profile-card">
+
+    <div class="profile-header">
+        <i class="fa fa-user-circle profile-icon"></i>
+        <h2>User Profile</h2>
+    </div>
+
+    <div class="profile-info">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email|default:"Not provided" }}</p>
+    </div>
+
+    <div class="profile-actions">
+        <a href="{% url 'dashboard' %}" class="btn-secondary">Go to Dashboard</a>
+    </div>
+
+</div>
+
+{% endblock %}

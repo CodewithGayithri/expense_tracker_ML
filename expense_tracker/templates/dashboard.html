@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 style="margin-top:20px;">Expense Dashboard</h2>
+
+<!-- CARDS -->
+<div class="cards">
+
+    <div class="card stat-card green">
+        <h4>💰 Total Expense</h4>
+        <h2>₹{{ total }}</h2>
+    </div>
+
+    <div class="card stat-card blue">
+        <h4>📊 Total Entries</h4>
+        <h2>{{ expenses|length }}</h2>
+    </div>
+
+    <div class="card stat-card orange">
+        <h4>📁 Categories</h4>
+        <h2>{{ expenses|length }}</h2>
+    </div>
+
+</div>
+
+<!-- ML Prediction -->
+{% if monthly_prediction %}
+<div class="prediction-box">
+    📊 Expected Expense Next Month
+    <div class="prediction-value">₹{{ monthly_prediction }}</div>
+</div>
+{% endif %}
+
+<!-- ADD EXPENSE -->
+<div class="card">
+    <h3>Add Expense</h3>
+
+    <form method="post" class="form-row">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Title</label>
+            {{ form.title }}
+        </div>
+
+        <div class="form-group">
+            <label>Amount</label>
+            {{ form.amount }}
+        </div>
+
+        <div class="form-group">
+            <label>Category</label>
+            {{ form.category }}
+        </div>
+
+        <button type="submit" class="btn-primary">Add</button>
+    </form>
+</div>
+
+<!-- TABLE -->
+<div class="card">
+    <h3>Your Expenses</h3>
+
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Amount (₹)</th>
+            <th>Category</th>
+            <th>Action</th>
+        </tr>
+
+        {% for exp in expenses %}
+        <tr>
+            <td>{{ exp.title }}</td>
+            <td>{{ exp.amount }}</td>
+            <td>{{ exp.category }}</td>
+            <td>
+                <a href="/edit/{{ exp.id }}/">Edit</a> |
+                <a href="/delete/{{ exp.id }}/">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

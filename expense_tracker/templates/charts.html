@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 style="text-align:center; margin-top:20px;">📊 Expense Analytics</h2>
+
+<div class="charts-container">
+
+    <!-- BAR CHART -->
+    <div class="card chart-card">
+        <h3>Monthly Expense Trend</h3>
+        <div class="chart-box">
+            <canvas id="barChart"></canvas>
+        </div>
+    </div>
+
+    <!-- PIE CHART -->
+    <div class="card chart-card">
+        <h3>Expense by Category</h3>
+        <div class="chart-box">
+            <canvas id="pieChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<!-- JSON DATA -->
+{{ months|json_script:"months-data" }}
+{{ monthly_totals|json_script:"totals-data" }}
+{{ category_labels|json_script:"cat-labels" }}
+{{ category_values|json_script:"cat-values" }}
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const months = JSON.parse(document.getElementById('months-data').textContent);
+    const monthlyTotals = JSON.parse(document.getElementById('totals-data').textContent);
+
+    const categories = JSON.parse(document.getElementById('cat-labels').textContent);
+    const categoryValues = JSON.parse(document.getElementById('cat-values').textContent);
+
+    // BAR CHART
+    new Chart(document.getElementById('barChart'), {
+        type: 'bar',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Monthly Expense (₹)',
+                data: monthlyTotals,
+                backgroundColor: '#3b82f6',
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // PIE CHART
+    new Chart(document.getElementById('pieChart'), {
+        type: 'pie',
+        data: {
+            labels: categories,
+            datasets: [{
+                data: categoryValues,
+                backgroundColor: [
+                    '#4CAF50',
+                    '#FF9800',
+                    '#2196F3',
+                    '#E91E63',
+                    '#9C27B0'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+</script>
+
+<!-- STYLING -->
+<style>
+.charts-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.chart-card {
+    width: 45%;
+    min-width: 320px;
+}
+
+.chart-box {
+    width: 100%;
+    height: 300px;
+}
+
+.chart-box canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .chart-card {
+        width: 90%;
+    }
+}
+</style>
+
+{% endblock %}

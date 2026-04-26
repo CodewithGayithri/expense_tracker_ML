@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    .home-box {
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+    .home-box h1 {
+        font-size: 36px;
+        margin-bottom: 10px;
+        color: #2d3748;
+    }
+
+    .home-box p {
+        font-size: 18px;
+        color: #555;
+        max-width: 600px;
+        margin: 15px auto;
+        line-height: 1.6;
+    }
+
+    .welcome-user {
+        margin-top: 20px;
+        font-size: 16px;
+        color: #2b6cb0;
+        font-weight: 500;
+    }
+
+    .cta-btn {
+        margin-top: 25px;
+        padding: 12px 25px;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .cta-btn:hover {
+        background: #43a047;
+    }
+</style>
+
+<div class="home-box">
+
+    <h1>Smart Expense Tracking</h1>
+
+    <p>
+        Take control of your finances with our simple and efficient expense tracker.
+        Easily record your daily spending, categorize expenses, and gain insights
+        into where your money goes — all in one place.
+    </p>
+
+    {% if user.is_authenticated %}
+        <p class="welcome-user">Welcome, {{ user.username }}</p>
+
+        <a href="{% url 'dashboard' %}" class="cta-btn">
+            Go to Dashboard
+        </a>
+    {% else %}
+        <a href="{% url 'login' %}" class="cta-btn">
+            Get Started
+        </a>
+    {% endif %}
+
+</div>
+
+{% endblock %}
